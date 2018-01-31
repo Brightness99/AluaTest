@@ -13,24 +13,6 @@ import { backTo } from '../actions';
 
 import NavigationBar from '../components/NavigationBar';
 
-const temsImg = [
-  'https://cdn.shopify.com/s/files/1/0691/5403/products/dashboard-screenshot_1024x1024.jpg?v=1439064271',
-  'https://cdn.shopify.com/s/files/1/0691/5403/products/dashboard-screenshot_1024x1024.jpg?v=1439064271',
-  'https://cdn.shopify.com/s/files/1/0691/5403/products/dashboard-screenshot_1024x1024.jpg?v=1439064271'
-];
-
-const PHOTO_SET = [
-  { src: 'https://source.unsplash.com/2ShvY8Lf6l0/800x599', width: 1, height: 1 },
-  { src: 'https://source.unsplash.com/Dm-qxdynoEc/800x799', width: 1, height: 1 },
-  { src: 'https://source.unsplash.com/qDkso9nvCg0/600x799', width: 1, height: 1 },
-  { src: 'https://source.unsplash.com/iecJiKe_RNg/600x799', width: 1, height: 1 },
-  { src: 'https://source.unsplash.com/epcsn8Ed8kY/600x799', width: 1, height: 1 },
-  { src: 'https://source.unsplash.com/NQSWvyVRIJk/800x599', width: 1, height: 1 },
-  { src: 'https://source.unsplash.com/zh7GEuORbUw/600x799', width: 1, height: 1 },
-  { src: 'https://source.unsplash.com/PpOHJezOalU/800x599', width: 1, height: 1 },
-  { src: 'https://source.unsplash.com/I1ASdgphUH4/800x599', width: 1, height: 1 },
-];
-
 type Props = {
   nav: {
     member: {}
@@ -48,33 +30,16 @@ class Detail extends React.Component {
       direction: null,
       member: null
     };
-    
   }
 
- props: Props;
-
-  componentWillMount() {
-  }
+  props: Props;
 
   componentDidMount(){
     this.setState({ member: this.props.nav.member.params });
     window.scroll(0, 0);
   }
 
-  componentWillUnmount(){
-    
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { nav } = nextProps;
-    console.log('====', nextProps);
-    // if (nav.member) {
-    //   this.setState({ member: nav.member.params });
-    // }
-  }
-
   handleSelect(selectedIndex, e) {
-    //alert(`selected=${selectedIndex}, direction=${e.direction}`);
     this.setState({
       index: selectedIndex,
       direction: e.direction
@@ -92,7 +57,6 @@ class Detail extends React.Component {
 
   render() {
     const { index, direction, member } = this.state;
-    console.log('member ===>', member);
     let navInfo = null;
     let avatars = [];
     let gallery = [];
@@ -147,7 +111,6 @@ class Detail extends React.Component {
 
 // export the connected class
 function mapStateToProps(state) {
-  console.log('state ===>', state);
   return {
     nav: state.nav
   };

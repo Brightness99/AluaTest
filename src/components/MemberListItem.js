@@ -22,8 +22,6 @@ type Props = {
   onClick: () => {}
 }
 
-const temsImg = 'https://cdn.shopify.com/s/files/1/0691/5403/products/dashboard-screenshot_1024x1024.jpg?v=1439064271';
-
 class MemberListItem extends React.Component {
   props: Props;
 
@@ -35,7 +33,6 @@ class MemberListItem extends React.Component {
       <Link className={classnames('member-list-item', className)} href="#/detail">
         <Panel onClick={() => onClick()}>
           <Image src={info.avatar.rt} responsive />
-          {/* <Image src={temsImg} responsive />  */}
           <div className="mid-info">
             <h4>{info.display_name}</h4>
             <h5>{info.title}</h5>
