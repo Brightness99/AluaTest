@@ -9,6 +9,8 @@ import {
   Panel
 } from 'react-bootstrap';
 import Gallery from 'react-photo-gallery';
+import { backTo } from '../actions';
+
 import NavigationBar from '../components/NavigationBar';
 
 const temsImg = [
@@ -29,6 +31,12 @@ const PHOTO_SET = [
   { src: 'https://source.unsplash.com/I1ASdgphUH4/800x599', width: 1, height: 1 },
 ];
 
+type Props = {
+  nav: {
+    member: {}
+  }
+}
+
 class Detail extends React.Component {
 
   constructor(props) {
@@ -37,17 +45,20 @@ class Detail extends React.Component {
 
     this.state = {
       index: 0,
-      direction: null
+      direction: null,
+      member: null
     };
     
   }
 
+ props: Props;
+
   componentWillMount() {
-    
   }
 
   componentDidMount(){
-    
+    this.setState({ member: this.props.nav.member.params });
+    window.scroll(0, 0);
   }
 
   componentWillUnmount(){
@@ -55,7 +66,11 @@ class Detail extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
+    const { nav } = nextProps;
+    console.log('====', nextProps);
+    // if (nav.member) {
+    //   this.setState({ member: nav.member.params });
+    // }
   }
 
   handleSelect(selectedIndex, e) {
@@ -66,38 +81,67 @@ class Detail extends React.Component {
     });
   }
 
+  backHandler() {
+    const { dispatch } = this.props;
+    const navInfo = {
+      from: '/detail',
+      to: '/home',
+    }
+    dispatch(backTo(navInfo));
+  }
+
   render() {
-    const { index, direction } = this.state;
-    return (
-      <div className="detail-container">
-        <NavigationBar />
-        <Carousel
-          activeIndex={index}
-          direction={direction}
-          onSelect={this.handleSelect}
-        >
-          {
-            temsImg.map((item, index) => (
-              <Carousel.Item key={`carousel-item-${index}`}>
-                <img width={900} height={500} alt="900x500" src={item}/>
-              </Carousel.Item>
-            ))
-          }
-        </Carousel>
-        <Panel className="bio-section">
-          <h4>United States</h4>
-          <h6>Verified <label className="c-gray">16 hrs ago</label></h6>
-          <h6>Hi there</h6>
-          <h6 className="follow-label">Instagram (17,956 followers)</h6>
-          <div className="right-container">
-            <h2>5<label><h6>CREDITS</h6><h6 className="c-gray"> / 50 chars</h6></label></h2>
+    const { index, direction, member } = this.state;
+    console.log('member ===>', member);
+    let navInfo = null;
+    let avatars = [];
+    let gallery = [];
+    let renderMark = null;
+    if (member) {
+      navInfo = {
+        title:{
+          name: member.display_name,
+          username: member.username
+        },
+        right: null
+      };
+      member.featured.map((item, index) => {
+        avatars.push(item.rt)
+        gallery.push({ src: item.rt, width: 1, height: 1 });
+      });
+      renderMark = 
+      (
+        <div className="detail-container">
+          <NavigationBar navInfo={navInfo} back={() => this.backHandler()}/>
+          <Carousel
+            activeIndex={index}
+            direction={direction}
+            onSelect={this.handleSelect}
+          >
+            {
+              avatars.map((item, index) => (
+                <Carousel.Item key={`carousel-item-${index}`}>
+                  <img width={900} height={500} alt="900x500" src={item}/>
+                </Carousel.Item>
+              ))
+            }
+          </Carousel>
+          <Panel className="bio-section">
+            <h4>{member.country}</h4>
+            <h6>{member.id_verified ? Verified : null}<label className="c-gray"> 16 hrs ago</label></h6>
+            <h6>{member.bio}</h6>
+            <h6 className="follow-label">Instagram (17,956 followers)</h6>
+            <div className="right-container">
+              <h2>{member.credit_rate}<label><h6>CREDITS</h6><h6 className="c-gray"> / {member.chars_per_msg} chars</h6></label></h2>
+            </div>
+          </Panel>
+          <div className="images-section">
+            <Gallery photos={gallery} />
           </div>
-        </Panel>
-        <div className="images-section">
-          <Gallery photos={PHOTO_SET} />
         </div>
-      </div>
-    );
+      );
+    }
+    return renderMark;
   }
 }
 
@@ -105,7 +149,12 @@ class Detail extends React.Component {
 function mapStateToProps(state) {
   console.log('state ===>', state);
   return {
-    
+    nav: state.nav
   };
 }
-export default connect(mapStateToProps)(Detail);
+
+function mapDispatchToProps(dispatch) {
+  return { dispatch };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Detail);

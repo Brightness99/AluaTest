@@ -1,23 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from 'react-bootstrap';
-import { getMembers } from '../actions';
+import { getMembers, navigateTo } from '../actions';
+import NavigationBar from '../components/NavigationBar';
 import MemberListItem from '../components/MemberListItem';
-
-const info = {
-  ig_url: 'https://cdn.shopify.com/s/files/1/0691/5403/products/dashboard-screenshot_1024x1024.jpg?v=1439064271',
-  display_name: 'brite night',
-  title: 'model',
-  is_online: true,
-  city: 'San Jose',
-  country: 'Unite State'
-}
 
 type Props = {
   dispatch: () => {},
-  member: {
-
-  }
+  member: {}
 };
 
 class Home extends React.Component {
@@ -28,14 +18,9 @@ class Home extends React.Component {
       offset: 0,
       members: []
     }
-    
   }
 
   props: Props;
-
-  componentWillMount() {
-    
-  }
 
   componentDidMount(){
     const { dispatch } = this.props;
@@ -43,27 +28,41 @@ class Home extends React.Component {
     dispatch(getMembers(offset));
   }
 
-  componentWillUnmount(){
-    
-  }
-
   componentWillReceiveProps(nextProps) {
-    const { member } = nextProps;
+    const { member, nav } = nextProps;
     const { member: prevMember } = this.props;
     if (prevMember !== member && !member.isRunning && member.isLoaded) {
       this.setState({
         members: member.member.data
+      }, () => {
+        const y = nav.member.scroll;
+        window.scroll({
+          top: y,
+          behavior: 'smooth'
+        });
       })
     }
   }
 
+  itemClickHandler(item) {
+    const { dispatch } = this.props;
+    const navInfo = {
+      from: '/home',
+      to: '/detail',
+      scroll: window.pageYOffset,
+      params: item,
+    }
+    dispatch(navigateTo(navInfo));
+  } 
+
   render() {
     const { members, offset } = this.state;
     const memberList = members.map((item, index) => (
-      <MemberListItem key={`member-item-${offset}-${index}`} info={item}/>
+      <MemberListItem key={`member-item-${offset}-${index}`} info={item} onClick={() => this.itemClickHandler(item)}/>
     ));
     return (
       <div className="home-container">
+        <NavigationBar />
         {memberList}
       </div>
     );
@@ -72,9 +71,10 @@ class Home extends React.Component {
 
 // export the connected class
 function mapStateToProps(state) {
-  console.log('state ===>', state);
+  console.log('home state ====>', state);
   return {
-    member: state.member
+    member: state.member,
+    nav: state.nav
   };
 }
 

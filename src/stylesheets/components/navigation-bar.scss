@@ -1,10 +1,17 @@
 .navigation-bar {
+  .navbar {
+    margin-bottom: 0;
+    border: none;
+    box-shadow: none;
+    background: white;
+  }
   .left-container {
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
     width: 10rem;
+    padding-left: 1rem;
   }
   .right-container {
     position: absolute;
@@ -12,6 +19,7 @@
     top: 0;
     bottom: 0;
     width: 10rem;
+    padding-right: 1rem;
   }
   .center-container {
     position: absolute;
@@ -20,5 +28,17 @@
     left: 10rem;
     right: 10rem;
     text-align: center;
+    h4 {
+      line-height: 3rem;
+    }
+    h6:first-child {
+      margin-bottom: 0rem;
+      margin-top: 1.2rem;
+      font-weight: bold;
+    }
+    h6:last-child {
+      margin-top: 0.5rem;
+      color: gray;
+    }
   }
 }

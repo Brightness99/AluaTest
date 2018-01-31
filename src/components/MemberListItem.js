@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router";
 import classnames from 'classnames';
 import {
   Button,
   Image,
   Panel,
   Row,
-  Col
+  Col,
 } from 'react-bootstrap';
 
 type Props = {
@@ -17,7 +18,8 @@ type Props = {
     is_online: boolean,
     city: string,
     country: string
-  }
+  },
+  onClick: () => {}
 }
 
 const temsImg = 'https://cdn.shopify.com/s/files/1/0691/5403/products/dashboard-screenshot_1024x1024.jpg?v=1439064271';
@@ -26,14 +28,14 @@ class MemberListItem extends React.Component {
   props: Props;
 
   render() {
-    const { className, info } = this.props;
+    const { className, info, onClick } = this.props;
     const last_online = '6 hours';
     
     return (
-      <div className={classnames('member-list-item', className)}>
-        <Panel>
-          {/* <Image src={info.avatar.th} responsive /> */}
-          <Image src={temsImg} responsive /> 
+      <Link className={classnames('member-list-item', className)} href="#/detail">
+        <Panel onClick={() => onClick()}>
+          <Image src={info.avatar.rt} responsive />
+          {/* <Image src={temsImg} responsive />  */}
           <div className="mid-info">
             <h4>{info.display_name}</h4>
             <h5>{info.title}</h5>
@@ -51,7 +53,7 @@ class MemberListItem extends React.Component {
             </Col>
           </Row>
         </Panel>
-      </div>
+      </Link>
     );
   }
 }

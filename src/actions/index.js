@@ -5,4 +5,5 @@
  * @desc Actions Root
  */
 
+export * from './nav';
 export * from './member';
