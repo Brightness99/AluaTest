@@ -1,0 +1,45 @@
+.detail-container {
+  .carousel-indicators {
+    margin-bottom: 0;
+    li {
+      width: 0.5rem;
+      height: 0.5rem;
+      margin: 0.3rem;
+      border: none;
+      background: $color-gray;
+      &.active {
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: $color-red;
+      }
+    }
+  }
+  .bio-section {
+    box-shadow: none;
+    border: none;
+    margin-bottom: 0;
+    .panel-body {
+      padding: 0.5rem 1rem;
+      position: relative;
+  
+      .right-container {
+        position: absolute;
+        right: 1rem;
+        top: 1.5rem;
+        h2, h5{
+          margin: 0;
+        }
+        h2 label {
+          text-align: right;
+          h6 {
+            margin: 0.1rem 0;
+          }
+        }
+      }
+      .follow-label {
+        margin: 4rem 0 0.5rem;
+      }
+    }
+  }
+
+}

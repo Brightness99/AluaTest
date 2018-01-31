@@ -1,7 +1,16 @@
 .member-list-item {
+  .panel {
+    margin-bottom: 0;
+  }
   .panel-body {
     position: relative;
     padding: 0;
+    img {
+      width: 100%;
+      min-height: 40rem;
+      object-fit: cover;
+      object-fit: fill;
+    }
     .mid-info {
       position: absolute;
       top: 45%;

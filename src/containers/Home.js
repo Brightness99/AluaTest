@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from 'react-bootstrap';
-import { MemberActions } from '../actions';
+import { getMembers } from '../actions';
 import MemberListItem from '../components/MemberListItem';
 
 const info = {
@@ -15,6 +15,9 @@ const info = {
 
 type Props = {
   dispatch: () => {},
+  member: {
+
+  }
 };
 
 class Home extends React.Component {
@@ -22,7 +25,8 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      offset: 0,
+      members: []
     }
     
   }
@@ -35,7 +39,8 @@ class Home extends React.Component {
 
   componentDidMount(){
     const { dispatch } = this.props;
-    dispatch(MemberActions.getMembers());
+    const { offset } = this.state;
+    dispatch(getMembers(offset));
   }
 
   componentWillUnmount(){
@@ -43,13 +48,23 @@ class Home extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    
+    const { member } = nextProps;
+    const { member: prevMember } = this.props;
+    if (prevMember !== member && !member.isRunning && member.isLoaded) {
+      this.setState({
+        members: member.member.data
+      })
+    }
   }
 
   render() {
+    const { members, offset } = this.state;
+    const memberList = members.map((item, index) => (
+      <MemberListItem key={`member-item-${offset}-${index}`} info={item}/>
+    ));
     return (
-      <div className="page-home">
-        <MemberListItem info={info}/>
+      <div className="home-container">
+        {memberList}
       </div>
     );
   }
@@ -59,7 +74,7 @@ class Home extends React.Component {
 function mapStateToProps(state) {
   console.log('state ===>', state);
   return {
-    
+    member: state.member
   };
 }
 

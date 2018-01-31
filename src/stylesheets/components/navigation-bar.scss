@@ -1,0 +1,24 @@
+.navigation-bar {
+  .left-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 10rem;
+  }
+  .right-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 10rem;
+  }
+  .center-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 10rem;
+    right: 10rem;
+    text-align: center;
+  }
+}

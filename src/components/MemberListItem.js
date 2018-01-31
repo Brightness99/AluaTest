@@ -11,7 +11,7 @@ import {
 type Props = {
   className: string,
   info: {
-    ig_url: string,
+    avatar: string,
     display_name: string,
     title: string,
     is_online: boolean,
@@ -20,16 +20,20 @@ type Props = {
   }
 }
 
+const temsImg = 'https://cdn.shopify.com/s/files/1/0691/5403/products/dashboard-screenshot_1024x1024.jpg?v=1439064271';
+
 class MemberListItem extends React.Component {
   props: Props;
 
   render() {
     const { className, info } = this.props;
     const last_online = '6 hours';
+    
     return (
       <div className={classnames('member-list-item', className)}>
         <Panel>
-          <Image src={info.ig_url}   responsive />
+          {/* <Image src={info.avatar.th} responsive /> */}
+          <Image src={temsImg} responsive /> 
           <div className="mid-info">
             <h4>{info.display_name}</h4>
             <h5>{info.title}</h5>
