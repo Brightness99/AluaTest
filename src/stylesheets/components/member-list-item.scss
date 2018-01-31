@@ -1,0 +1,35 @@
+.member-list-item {
+  .panel-body {
+    position: relative;
+    padding: 0;
+    .mid-info {
+      position: absolute;
+      top: 45%;
+      width: 100%;
+      text-align: center;
+      color: white;
+      h4 {
+        text-transform: uppercase;
+      }
+    }
+    .bot-info {
+      position: absolute;
+      display: flex;
+      bottom: 1rem;
+      left: 1rem;
+      right: 1rem;
+      color: white;
+      &>div:last-child {
+        text-align: right;
+      }
+      .online-icon {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.8rem;
+        background: green;
+        border-radius: 50%;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
