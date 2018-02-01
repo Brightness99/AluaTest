@@ -24,7 +24,8 @@ type Props = {
 // const temp = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT71V-yogU1_HYrFkRwEemFB3C6vayK9IBfXri2UBMIoSPZalcoYA';
 class MemberListItem extends React.Component {
   props: Props;
-
+ 
+  
   render() {
     const { className, info, onClick } = this.props;
     const last_online = '6 hours';
