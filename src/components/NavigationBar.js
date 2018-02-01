@@ -1,12 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { browserHistory } from 'react-router';
-
 import {
   Navbar,
   Nav,
   NavItem,
-  
   Glyphicon
 } from 'react-bootstrap';
 
@@ -17,7 +15,8 @@ type Props = {
       username: ''
     },
     right: null,
-  }
+  },
+  back: () => {}
 }
 class NavigationBar extends React.Component {
 
@@ -26,31 +25,14 @@ class NavigationBar extends React.Component {
     }
 
     props: Props;
-  
-    componentWillMount() {
-      
-    }
-  
-    componentDidMount(){
-      
-    }
-  
-    componentWillUnmount(){
-      
-    }
-  
-    componentWillReceiveProps(nextProps) {
-  
-    }
-  
     
     render() {
-      const { navInfo } = this.props;
+      const { navInfo, back } = this.props;
       let backButton = null;
       let title = null;
       if (navInfo) {
         backButton = (
-          <NavItem onClick={browserHistory.goBack}>
+          <NavItem onClick={() => back()}>
             <Glyphicon glyph="glyphicon glyphicon-menu-left" />
           </NavItem>
         );
@@ -75,7 +57,7 @@ class NavigationBar extends React.Component {
             </Nav>
             {title}
             <Nav className="right-container">
-              
+              {/* //Todo We could add the right buttons here */}
             </Nav>
           </Navbar>
         </div>
@@ -83,10 +65,6 @@ class NavigationBar extends React.Component {
     }
   }
   
-  // export the connected class
-  function mapStateToProps(state) {
-    return {
-    };
-  }
-  export default connect(mapStateToProps)(NavigationBar);
+ 
+  export default NavigationBar;
   

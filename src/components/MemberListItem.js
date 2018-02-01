@@ -6,7 +6,7 @@ import {
   Image,
   Panel,
   Row,
-  Col,
+  Col
 } from 'react-bootstrap';
 
 type Props = {

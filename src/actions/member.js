@@ -8,16 +8,16 @@ import { MemberConstants } from '../constants';
 
 /**
  * Login
- * @param offset
+ * @param endpoint
  *
  * @returns {Object}
 **/
 
-export function getMembers(offset): Object {
+export function getMembers(endpoint): Object {
   return {
     type: MemberConstants.MEMBER_FETCH_REQUEST,
     payload: {
-      offset: offset
+      endpoint: endpoint,
     }
   }
 }

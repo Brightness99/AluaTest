@@ -17,14 +17,12 @@ type Props = {
   nav: {
     member: {}
   }
-}
+};
 
 class Detail extends React.Component {
-
   constructor(props) {
     super(props);
     this.handleSelect = this.handleSelect.bind(this);
-
     this.state = {
       index: 0,
       direction: null,
@@ -47,12 +45,7 @@ class Detail extends React.Component {
   }
 
   backHandler() {
-    const { dispatch } = this.props;
-    const navInfo = {
-      from: '/detail',
-      to: '/home',
-    }
-    dispatch(backTo(navInfo));
+    window.location.href = '#/home';
   }
 
   render() {
@@ -83,6 +76,7 @@ class Detail extends React.Component {
             onSelect={this.handleSelect}
           >
             {
+              
               avatars.map((item, index) => (
                 <Carousel.Item key={`carousel-item-${index}`}>
                   <img width={900} height={500} alt="900x500" src={item}/>
@@ -116,8 +110,4 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return { dispatch };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Detail);
+export default connect(mapStateToProps)(Detail);

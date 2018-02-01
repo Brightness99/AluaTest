@@ -22,20 +22,4 @@ export function navigateTo(member): Object {
   }
 }
 
-/**
- * backTo
- * @param member
- *
- * @returns {Object}
-**/
-
-export function backTo(backInfo): Object {
-  return {
-    type: NavConstants.BACK_TO,
-    payload: {
-      backInfo
-    }
-  }
-}
-
 

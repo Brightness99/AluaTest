@@ -1,6 +1,7 @@
 export default class Member {
-  static getMember(params) {
-    const url = `https://api.alua.com/v1/users/discover?offset=0&limit=20`;
+  static getMember(payload) {
+    //const url = `https://api.alua.com/v1/users/discover?offset=0&limit=20`;
+    const url = `https://api.alua.com${payload.endpoint}`;
     return new Promise((resolve, reject) => {
       fetch(url)
         .then((res) => {

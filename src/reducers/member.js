@@ -4,17 +4,17 @@ import { MemberConstants } from '../constants';
 const initialState = {
   isRunning: false,
   isLoaded: false,
-  offset: 0,
+  endpoint: '',
   member: {},
 };
 
 export default function members(state = initialState, action) {
   switch (action.type) {
     case MemberConstants.MEMBER_FETCH_REQUEST:
-    const offset = action.payload.offset;
+    const endpoint = action.payload.endpoint;
       return {
         ...state,
-        offset,
+        endpoint,
         isRunning: true,
         isLoaded: false,
       };

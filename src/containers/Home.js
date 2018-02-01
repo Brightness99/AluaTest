@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col } from 'react-bootstrap';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { getMembers, navigateTo } from '../actions';
 import NavigationBar from '../components/NavigationBar';
 import MemberListItem from '../components/MemberListItem';
@@ -14,33 +15,46 @@ class Home extends React.Component {
 
   constructor(props) {
     super(props);
+    this.fetchData = this.fetchData.bind(this);
     this.state = {
       offset: 0,
+      endpoint: '/v1/users/discover?offset=0&limit=20',
+      next: '',
+      scrollY: 0,
       members: []
-    }
+    };
   }
 
   props: Props;
 
   componentDidMount(){
-    const { dispatch } = this.props;
-    const { offset } = this.state;
-    dispatch(getMembers(offset));
+    
+    const prevState = JSON.parse(localStorage.getItem( 'homeState' )) || null;
+    if (prevState === null) {
+      const { dispatch } = this.props;
+      const { endpoint } = this.state;
+      dispatch(getMembers(endpoint));
+    } else {
+      const { scrollY } = prevState;
+      this.setState({ ...prevState }, () => {
+        window.scroll({
+          top: scrollY,
+          behavior: 'smooth'
+        });
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { member, nav } = nextProps;
+    const { member } = nextProps;
     const { member: prevMember } = this.props;
     if (prevMember !== member && !member.isRunning && member.isLoaded) {
+      const { members } = this.state;
+      const newMembers = members.concat(member.member.data);
       this.setState({
-        members: member.member.data
-      }, () => {
-        const y = nav.member.scroll;
-        window.scroll({
-          top: y,
-          behavior: 'smooth'
-        });
-      })
+        members: newMembers,
+        next: member.member.next
+      });
     }
   }
 
@@ -49,21 +63,51 @@ class Home extends React.Component {
     const navInfo = {
       from: '/home',
       to: '/detail',
-      scroll: window.pageYOffset,
       params: item,
     }
-    dispatch(navigateTo(navInfo));
-  } 
+    this.setState({ scrollY: window.pageYOffset }, () => {
+      dispatch(navigateTo(navInfo));
+      localStorage.setItem('homeState', JSON.stringify(this.state));
+    });
+  }
+  
+  refresh() {}
+
+  fetchData() {
+    const { dispatch } = this.props;
+    const { next } = this.state;
+    if (next) {
+      dispatch(getMembers(next));
+    }
+  }
 
   render() {
-    const { members, offset } = this.state;
+    const { members, next } = this.state;
     const memberList = members.map((item, index) => (
-      <MemberListItem key={`member-item-${offset}-${index}`} info={item} onClick={() => this.itemClickHandler(item)}/>
+      <MemberListItem key={`member-item-${next}-${index}`} info={item} onClick={() => this.itemClickHandler(item)}/>
     ));
     return (
       <div className="home-container">
         <NavigationBar />
-        {memberList}
+        <InfiniteScroll
+          pullDownToRefresh
+          pullDownToRefreshContent={
+            <h3 style={{textAlign: 'center'}}>&#8595; Pull down to refresh</h3>
+          }
+          releaseToRefreshContent={
+            <h3 style={{textAlign: 'center'}}>&#8593; Release to refresh</h3>
+          }
+          refreshFunction={this.refresh}
+          next={() => this.fetchData()}
+          hasMore={true}
+          loader={<h6>Loading...</h6>}
+          endMessage={
+            <p style={{textAlign: 'center'}}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }>
+          {memberList}
+        </InfiniteScroll>
       </div>
     );
   }
@@ -71,10 +115,8 @@ class Home extends React.Component {
 
 // export the connected class
 function mapStateToProps(state) {
-  console.log('home state ====>', state);
   return {
-    member: state.member,
-    nav: state.nav
+    member: state.member
   };
 }
 
