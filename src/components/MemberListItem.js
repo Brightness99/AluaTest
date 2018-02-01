@@ -21,18 +21,18 @@ type Props = {
   },
   onClick: () => {}
 }
-
+// const temp = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT71V-yogU1_HYrFkRwEemFB3C6vayK9IBfXri2UBMIoSPZalcoYA';
 class MemberListItem extends React.Component {
   props: Props;
 
   render() {
     const { className, info, onClick } = this.props;
     const last_online = '6 hours';
-    
     return (
       <Link className={classnames('member-list-item', className)} href="#/detail">
         <Panel onClick={() => onClick()}>
           <Image src={info.avatar.rt} responsive />
+          {/* <Image src={temp} responsive /> */}
           <div className="mid-info">
             <h4>{info.display_name}</h4>
             <h5>{info.title}</h5>

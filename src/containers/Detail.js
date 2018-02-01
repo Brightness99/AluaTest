@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-
 import {
   Navbar,
   Nav,
@@ -18,7 +17,7 @@ type Props = {
     member: {}
   }
 };
-
+//const temp = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT71V-yogU1_HYrFkRwEemFB3C6vayK9IBfXri2UBMIoSPZalcoYA';
 class Detail extends React.Component {
   constructor(props) {
     super(props);
@@ -66,8 +65,7 @@ class Detail extends React.Component {
         avatars.push(item.rt)
         gallery.push({ src: item.rt, width: 1, height: 1 });
       });
-      renderMark = 
-      (
+      renderMark = (
         <div className="detail-container">
           <NavigationBar navInfo={navInfo} back={() => this.backHandler()}/>
           <Carousel
@@ -76,7 +74,6 @@ class Detail extends React.Component {
             onSelect={this.handleSelect}
           >
             {
-              
               avatars.map((item, index) => (
                 <Carousel.Item key={`carousel-item-${index}`}>
                   <img width={900} height={500} alt="900x500" src={item}/>
@@ -103,8 +100,8 @@ class Detail extends React.Component {
   }
 }
 
-// export the connected class
 function mapStateToProps(state) {
+  console.log('state ===>', state);
   return {
     nav: state.nav
   };

@@ -1,9 +1,13 @@
 .navigation-bar {
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
   .navbar {
     margin-bottom: 0;
     border: none;
     box-shadow: none;
     background: white;
+    border-radius: 0;
   }
   .left-container {
     position: absolute;

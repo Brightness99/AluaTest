@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, Glyphicon } from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getMembers, navigateTo } from '../actions';
 import NavigationBar from '../components/NavigationBar';
@@ -16,6 +16,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.fetchData = this.fetchData.bind(this);
+    this.itemClickHandler = this.itemClickHandler.bind(this);
     this.state = {
       offset: 0,
       endpoint: '/v1/users/discover?offset=0&limit=20',
@@ -90,17 +91,11 @@ class Home extends React.Component {
       <div className="home-container">
         <NavigationBar />
         <InfiniteScroll
-          pullDownToRefresh
-          pullDownToRefreshContent={
-            <h3 style={{textAlign: 'center'}}>&#8595; Pull down to refresh</h3>
-          }
-          releaseToRefreshContent={
-            <h3 style={{textAlign: 'center'}}>&#8593; Release to refresh</h3>
-          }
           refreshFunction={this.refresh}
           next={() => this.fetchData()}
           hasMore={true}
-          loader={<h6>Loading...</h6>}
+          // loader={<h5 style={{textAlign: 'center'}}>Loading ...</h5>}
+          loader={<h5 style={{textAlign: 'center'}}><Glyphicon glyph="glyphicon glyphicon-repeat glyphicon-refresh-animate" /></h5> }
           endMessage={
             <p style={{textAlign: 'center'}}>
               <b>Yay! You have seen it all</b>
@@ -113,7 +108,6 @@ class Home extends React.Component {
   }
 }
 
-// export the connected class
 function mapStateToProps(state) {
   return {
     member: state.member

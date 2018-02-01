@@ -7,7 +7,7 @@ import Detail from './containers/Detail';
 
 // build the router
 const router = (
-  <Router  history={hashHistory}>
+  <Router  history={history}>
 
     <Route path="/" component={App}>
       <Route path="home" component={Home}/>
